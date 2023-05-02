@@ -84,3 +84,5 @@ a2e358,::1,GET,http://localhost:8000/front/img/payement-item.png,1683029361,88fd
 4f1e28,::1,GET,http://localhost:8000/evenement/eventFilter/Ffdsgdf,1683029367,,200
 b0c7ae,::1,GET,http://localhost:8000/front/img/payement-item.png,1683029368,87e087,404
 87e087,::1,GET,http://localhost:8000/front/img/payement-item.png,1683029368,,404
+9f8b24,::1,GET,http://localhost:8000/livre/new,1683029828,620b1e,500
+620b1e,::1,GET,http://localhost:8000/livre/new,1683029828,,500
