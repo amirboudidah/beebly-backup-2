@@ -21,7 +21,7 @@ class EstimationoffrelivreController extends AbstractController
     public function SendSMS(string $to, string $message)
     {
         $sid = 'AC39fa940bdd1be4d3294e6cb4f449bbba';
-        $token = '669aad4fcdc1d184e435ab3930193822';
+        $token = '0936bbf4623e75ceea6aca5b4b3a594c';
         $twilioNumber = '+15672352667';
 
         $client = new Client($sid, $token);
@@ -70,10 +70,8 @@ class EstimationoffrelivreController extends AbstractController
             $estimationoffrelivreRepository->save($estimationoffrelivre, true);
 
             $to = '+21628168997';
-            $message = 'A new response has been added to your complaint. Please check your account for more information.' ;
+            $message ='On vous propose '.$estimationoffrelivre->getPointestime(). ' sur votre livre '.$propositionlivre->getTitrelivre() ;            
             $this->SendSMS($to, $message);
-
-
             return $this->redirectToRoute('app_estimationoffrelivre_index', [], Response::HTTP_SEE_OTHER);
         }
 

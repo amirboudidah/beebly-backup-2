@@ -109,7 +109,7 @@ class SujetController extends AbstractController
 
             $transport = Transport::fromDsn("smtp://pidev.beebly@gmail.com:bwukvzhiqbpwyrdc@smtp.gmail.com:587?encryption=tls");
             $mailer = new Mailer($transport);
-           $emailTo = "pidev.beebly@gmail.com";//$terrain->getIdPartenaire()->getEmail() ;
+           $emailTo = "emna.bouzouita@gmail.com";//$terrain->getIdPartenaire()->getEmail() ;
             $email = (new Email())
        
             ->from('pidev.beebly@gmail.com')

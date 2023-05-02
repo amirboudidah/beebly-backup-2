@@ -160,33 +160,4 @@ if ($likee === null) {
         return $this->redirectToRoute('app_user_signin', [], Response::HTTP_SEE_OTHER);
     }
     }
-
-    #[Route('/{idcom}/edit', name: 'app_commentaire_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Commentaire $commentaire, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(CommentaireType::class, $commentaire);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_commentaire_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('commentaire/edit.html.twig', [
-            'commentaire' => $commentaire,
-            'form' => $form,
-        ]);
-    }
-
-    #[Route('/{idcom}', name: 'app_commentaire_delete', methods: ['POST'])]
-    public function delete(Request $request, Commentaire $commentaire, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$commentaire->getIdcom(), $request->request->get('_token'))) {
-            $entityManager->remove($commentaire);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('app_commentaire_index', [], Response::HTTP_SEE_OTHER);
-    }
 }
