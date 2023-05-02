@@ -51,9 +51,6 @@
 
 {% endblock %}
 
-
-
-
 {% block css%}
             
 <!-- Favicon -->
@@ -195,6 +192,26 @@
         <div data-i18n="Analytics">Ticket</div>
       </a>
     </li>
+
+           <li class="menu-item active">
+      <a href="{{ path('app_topic_index') }}" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+        <div data-i18n="Analytics">Topics</div>
+      </a>
+    </li>
+
+              <li class="menu-item active">
+      <a href="{{ path('app_sujet_index') }}" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+        <div data-i18n="Analytics">Sujets</div>
+      </a>
+    </li>
+      <li class="menu-item active">
+      <a href="{{ path('app_commentaire_index') }}" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+        <div data-i18n="Analytics">Commentaires</div>
+      </a>
+    </li>
    
   </ul>
 
@@ -240,7 +257,14 @@
 
 
         
-  
+        <!-- Search -->
+        <div class="navbar-nav align-items-center">
+          <div class="nav-item d-flex align-items-center">
+            <i class="bx bx-search fs-4 lh-0"></i>
+            <input type="text" class="form-control border-0 shadow-none" placeholder="Search..." aria-label="Search...">
+          </div>
+        </div>
+        <!-- /Search -->
         
 
         <ul class="navbar-nav flex-row align-items-center ms-auto">

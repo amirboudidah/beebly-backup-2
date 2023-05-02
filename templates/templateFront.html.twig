@@ -41,7 +41,7 @@
     <div class="humberger__menu__overlay"></div>
     <div class="humberger__menu__wrapper">
         <div class="humberger__menu__logo">
-            <a href="#"><img src="{{ asset('front/img/logo.png') }}" alt=""></a>
+            <a href="#"><img src="{{ asset('front/img/beebly.png') }}" alt=""></a>
         </div>
         <div class="humberger__menu__cart">
             <ul>
@@ -69,10 +69,9 @@
                 <li class="active"><a href="./index.html">Home</a></li>
                 <li><a href="{{path('app_user_profilefront')}}">Profile</a></li>
                 
-                <li><a href="{{path('app_reclamation_new')}}">Reclamation</a></li>
-                <li><a href="{{path('app_evenement_index')}}">Evenement</a></li>
-
-                <li><a href="./contact.html">Contact</a></li>
+                <li><a href="{{path('reclamationFront')}}">Reclamation</a></li>
+                <li><a href="{{path('eventsFront')}}">Evenement</a></li>
+<li><a href="{{path('topicFront')}}">Topics</a></li>
             </ul>
         </nav>
         <div id="mobile-menu-wrap"></div>
@@ -135,7 +134,7 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="header__logo">
-                        <a href="./index.html"><img src="{{ asset('front/img/logo.png')}}" alt=""></a>
+                        <a href="./index.html"><img src="{{ asset('front/img/beebly.png')}}" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -144,10 +143,11 @@
                             <li class="active"><a href="./index.html">Home</a></li>
                             <li><a href="{{path('app_user_profilefront')}}">Profile</a></li>
           
-                            <li><a href="{{path('app_reclamation_new')}}">Reclamation</a></li>
-                            <li><a href="{{path('app_evenement_index')}}">Evenement</a></li>
+                            <li><a href="{{path('reclamationFront')}}">Reclamation</a></li>
+                            <li><a href="{{path('eventsFront')}}">Events</a></li>
+                            
+<li><a href="{{path('topicFront')}}">Topics</a></li>
 
-                            <li><a href="./contact.html">Contact</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -209,7 +209,7 @@
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="footer__about">
                         <div class="footer__about__logo">
-                            <a href="./index.html"><img src="{{ asset('front/img/logo.png')}}" alt=""></a>
+                            <a href="./index.html"><img src="{{ asset('front/img/beebly.png')}}" alt=""></a>
                         </div>
                         <ul>
                             <li>Address: 60-49 Road 11378 New York</li>
