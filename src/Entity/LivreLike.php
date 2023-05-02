@@ -1,22 +1,32 @@
 <?php
 
+// src/Entity/LivreLike.php
+
 namespace App\Entity;
 
 use App\Repository\LivreLikeRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: LivreLikeRepository::class)]
+/**
+ * @ORM\Entity(repositoryClass=LivreLikeRepository::class)
+ */
 class LivreLike
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'likes')]
+    /**
+     * @ORM\ManyToOne(targetEntity=Livre::class, inversedBy="likes")
+     */
     private ?Livre $livre = null;
 
-    #[ORM\ManyToOne(inversedBy: 'likes')]
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="likes")
+     */
     private ?User $user = null;
 
     public function getId(): ?int
@@ -48,3 +58,4 @@ class LivreLike
         return $this;
     }
 }
+

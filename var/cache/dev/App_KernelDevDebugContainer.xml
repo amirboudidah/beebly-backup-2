@@ -597,7 +597,10 @@
     <service id="App\Security\LoginAuthenticator" class="App\Security\LoginAuthenticator" autowire="true" autoconfigure="true">
       <argument type="service" id="router.default"/>
     </service>
-    <service id="App\Service\FileUploader" class="App\Service\FileUploader" autowire="true" autoconfigure="true"/>
+    <service id="App\Service\FileUploader" class="App\Service\FileUploader" autowire="true" autoconfigure="true">
+      <argument>C:\Users\amirb\OneDrive\Bureau\web\beebly-backup-2/public/uploads</argument>
+      <argument type="service" id="slugger"/>
+    </service>
     <service id="App\Service\TwigExtension" class="App\Service\TwigExtension" autowire="true" autoconfigure="true">
       <tag name="twig.extension"/>
     </service>

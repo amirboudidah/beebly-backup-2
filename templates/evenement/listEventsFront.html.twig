@@ -19,7 +19,18 @@
 </form>
 
 </div>
-
+<div class="row">
+<h1 class="col-9">Filter Events</h1>
+<div class="d-flex flex-column justify-content-center">
+    {% for event in evenements %}
+    
+        <li class="list-group-item">
+            <a href="{{ path('eventFilter', {'emplacement': event.emplacement}) }}" class="btn btn-link">{{ event.emplacement }}</a>
+        </li>
+    {% endfor %}
+    </div>
+</ul>
+</div>
 <div class="row"  id="searchResults">
         {% for evenement in evenements %}
            
