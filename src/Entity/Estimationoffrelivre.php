@@ -3,16 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\EstimationoffrelivreRepository;
-use Symfony\Component\Validator\Constraints as Assert;
-
 
 /**
  * Estimationoffrelivre
  *
  * @ORM\Table(name="estimationoffrelivre", indexes={@ORM\Index(name="for_idx", columns={"idProposition"})})
- * @ORM\Entity(repositoryClass="App\Repository\EstimationoffrelivreRepository")
-
+ * @ORM\Entity
  */
 class Estimationoffrelivre
 {
@@ -29,19 +25,15 @@ class Estimationoffrelivre
      * @var int|null
      *
      * @ORM\Column(name="pointEstime", type="integer", nullable=true, options={"default"="NULL"})
-     *
-     * @Assert\NotBlank
-     * @Assert\Type(type="numeric")
-     * @Assert\GreaterThan(value=0, message="Les points doit être supérieur à {{ compared_value }}.")
      */
-    private $pointestime;
+    private $pointestime = NULL;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="etat", type="string", length=45, nullable=true, options={"default"="NULL"})
      */
-    private $etat;
+    private $etat = 'NULL';
 
     /**
      * @var \Propositionlivre
@@ -92,11 +84,6 @@ class Estimationoffrelivre
         $this->idproposition = $idproposition;
 
         return $this;
-    }
-
-    public function __toString(): string
-    {
-        return $this->idestimationoffrelivre;
     }
 
 
