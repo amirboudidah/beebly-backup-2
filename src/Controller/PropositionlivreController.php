@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 #[Route('/propositionlivre')]
 class PropositionlivreController extends AbstractController
@@ -58,12 +58,13 @@ class PropositionlivreController extends AbstractController
     }
 
     #[Route('/mespropositions', name: 'show_my_propositions', methods: ['GET'])]
-    public function mesPropositions(EntityManagerInterface $entityManager): Response
+    public function mesPropositions(EntityManagerInterface $entityManager,SessionInterface $session): Response
     {
+        $id=$session->get('id');
         $propositionlivres = $entityManager
             ->getRepository(Propositionlivre::class)
             ->findBy(
-                ['idclient' => 1]
+                ['idclient' => $id]
             );
 
         return $this->render('propositionlivre/show_my_propositions.html.twig', [
@@ -137,8 +138,9 @@ class PropositionlivreController extends AbstractController
 
 
     #[Route('/new', name: 'app_propositionlivre_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager,ManagerRegistry $doctrine): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,ManagerRegistry $doctrine,SessionInterface $session): Response
     {
+        $id=$session->get('id');
         $propositionlivre = new Propositionlivre();
         $form = $this->createForm(PropositionlivreType::class, $propositionlivre);
         $form->handleRequest($request);
@@ -147,7 +149,7 @@ class PropositionlivreController extends AbstractController
 
             $c = $doctrine
                 ->getRepository(User::class)
-                ->find(1);
+                ->find($id);
             $current_date = date('Y-m-d');
             $date_object = DateTime::createFromFormat('Y-m-d', $current_date);
 
