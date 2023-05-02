@@ -5,3 +5,16 @@ twig:
 when@test:
     twig:
         strict_variables: true
+
+when@test:
+    twig:
+        default_path: '%kernel.project_dir%/templates'
+        debug: '%kernel.debug%'
+        strict_variables: '%kernel.debug%'
+        form_themes:
+            - 'bootstrap_5_layout.html.twig'
+        paths:
+            '%kernel.project_dir%/src/Form/': Form
+        extensions:
+            - Twig_Extension_StringLoader
+            - Twig_Extension_TextExtension
