@@ -4,6 +4,8 @@
 
 namespace App\Entity;
 
+use App\Entity\Livre;
+use App\Entity\User;
 use App\Repository\LivreLikeRepository;
 use Doctrine\ORM\Mapping as ORM;
 

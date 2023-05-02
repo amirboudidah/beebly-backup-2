@@ -5,20 +5,28 @@ namespace App\Entity;
 use App\Repository\ItemRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ItemRepository::class)]
+/**
+ * @ORM\Entity(repositoryClass=ItemRepository::class)
+ */
 class Item
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
 
-    #[ORM\ManyToOne(inversedBy: 'items')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Livre $livre = null;
+    /**
+     * @ORM\ManyToOne(targetEntity=Livre::class, inversedBy="items")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $livre;
 
-    #[ORM\Column]
-    private ?int $quantity = null;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $quantity;
 
     public function getId(): ?int
     {
