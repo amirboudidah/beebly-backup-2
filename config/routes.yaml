@@ -1,11 +1,3 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
-controllers:
-    resource: ../src/Controller/
-    type: attribute
-
-app_catalogue_recherche:
-    path: /catalogue/recherche
-    controller: App\Controller\CatalogueController::recherche
-    methods: [GET, POST]
