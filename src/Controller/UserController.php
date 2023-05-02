@@ -22,6 +22,8 @@ use Symfony\Component\Mime\Email;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Symfony\Component\HttpFoundation\JsonResponse;
+
+
 #[Route('/user')]
 class UserController extends AbstractController
 {
