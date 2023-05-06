@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mailer\Transport;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Mailer\Mailer;
@@ -256,7 +257,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/front/signup', name: 'app_user_signup', methods: ['GET', 'POST'])]
-    public function signup(Request $request, EntityManagerInterface $entityManager,SessionInterface $session): Response
+    public function signup(MailerInterface $maileer,Request $request, EntityManagerInterface $entityManager,SessionInterface $session): Response
     {        
 $user = new User();
 $form = $this->createForm(UserType::class, $user);
@@ -273,9 +274,8 @@ if ($form->isSubmitted() && $form->isValid()) {
         $entityManager->persist($user);
         $entityManager->flush();
 
-        $transport = (new EsmtpTransport('smtp.gmail.com', 587))
-            ->setUsername('beeblyinfo@gmail.com')
-            ->setPassword('ojqdadkqhwvefatr');
+
+        $transport = Transport::fromDsn("smtp://pidev.beebly@gmail.com:bwukvzhiqbpwyrdc@smtp.gmail.com:587?encryption=tls");
 
         // Create the Mailer instance
         $mailer = new Mailer($transport);
@@ -423,10 +423,7 @@ public function fgtpwd(Request $request, EntityManagerInterface $entityManager)
         $use=$connectedUser;
         if ($connectedUser!=null){
             $adrmail = $form["adrmail"]->getData();
-            $transport = (new EsmtpTransport('smtp.gmail.com', 587))
-            ->setUsername('beeblyinfo@gmail.com')
-            ->setPassword('ojqdadkqhwvefatr');
-
+            $transport = Transport::fromDsn("smtp://pidev.beebly@gmail.com:bwukvzhiqbpwyrdc@smtp.gmail.com:587?encryption=tls");
         // Create the Mailer instance
         $mailer = new Mailer($transport);
 

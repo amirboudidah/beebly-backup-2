@@ -2,7 +2,7 @@
 swiftmailer:
     transport: gmail
     username: 'beeblyinfo@gmail.com'
-    password: 'ojqdadkqhwvefatr'
+    password: 'akewbucqjrfviqvr'
     host: 'smtp.gmail.com'
     port: 465
     encryption: ssl

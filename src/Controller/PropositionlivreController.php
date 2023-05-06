@@ -11,6 +11,7 @@ use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -58,12 +59,13 @@ class PropositionlivreController extends AbstractController
     }
 
     #[Route('/mespropositions', name: 'show_my_propositions', methods: ['GET'])]
-    public function mesPropositions(EntityManagerInterface $entityManager): Response
+    public function mesPropositions(EntityManagerInterface $entityManager,SessionInterface $session): Response
     {
+        $id=$session->get('id');
         $propositionlivres = $entityManager
             ->getRepository(Propositionlivre::class)
             ->findBy(
-                ['idclient' => 1]
+                ['idclient' => $id]
             );
 
         return $this->render('propositionlivre/show_my_propositions.html.twig', [
