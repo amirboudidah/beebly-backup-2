@@ -719,10 +719,13 @@ public function fgtpwd(Request $request, EntityManagerInterface $entityManager)
 }
 
 #[Route('/front/{id}/newpwd', name: 'app_user_newpwd', methods: ['GET', 'POST'])]
-public function newpassword(Request $request, EntityManagerInterface $entityManager,$id, User $user)
-{   $form = $this->createForm(NewpwdType::class, $user);
+public function newpassword(Request $request, EntityManagerInterface $entityManager,$id)
+{
+    $user=new User();
+    $form = $this->createForm(NewpwdType::class, $user);
     $form->handleRequest($request);
-    $us = $entityManager
+    
+    $user = $entityManager
     ->getRepository(User::class)->find($id);
     $pwd=$form["mdp"]->getData();
     if ($form->isSubmitted() && $form->isValid()) {
@@ -733,7 +736,7 @@ public function newpassword(Request $request, EntityManagerInterface $entityMana
     }
 
     return $this->renderForm('user/newpwd.html.twig', [
-        'user' => $us,
+        'user' => $user,
         'form' => $form,
     ]);
 
