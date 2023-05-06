@@ -54,32 +54,15 @@ class Livre
      */
     private ?int $note = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Item::class, mappedBy="livre")
-     */
+    #[ORM\ManyToOne(inversedBy: 'livres')]
+    private ?User $users = null;
+
+    #[ORM\OneToMany(mappedBy: 'livre', targetEntity: Item::class)]
     private Collection $items;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="livres")
-     */
-    private Collection $favoris;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="livres")
-     */
-    private ?User $user = null;
-
-    /**
-     * @ORM\OneToMany(targetEntity=LivreLike::class, mappedBy="livre")
-     */
-    private Collection $likes;
 
     public function __construct()
     {
         $this->items = new ArrayCollection();
-        $this->favoris = new ArrayCollection();
-        $this->favoriUsers = new ArrayCollection();
-        $this->likes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -171,6 +154,18 @@ class Livre
         return $this;
     }
 
+    public function getUsers(): ?User
+    {
+        return $this->users;
+    }
+
+    public function setUsers(?User $users): self
+    {
+        $this->users = $users;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Item>
      */
@@ -200,104 +195,4 @@ class Livre
 
         return $this;
     }
-
-    /**
-     * @return Collection<int, User>
-     */
-    public function getFavoris(): Collection
-    {
-        return $this->favoris;
-    }
-
-    public function addFavori(?User $favori): self
-    {
-        if ($favori && !$this->favoris->contains($favori)) {
-            $this->favoris->add($favori);
-        }
-
-        return $this;
-    }
-
-    public function removeFavoris(): self
-    {
-        $this->favoris->clear();
-
-        return $this;
-    }
-
-
-
-    public function getUsers(): ?User
-    {
-        return $this->users;
-    }
-
-    public function setUsers(?User $users): self
-    {
-        $this->users = $users;
-
-        return $this;
-    }
-    public function addFavoriUser(User $user): self
-    {
-        if (!$this->favoriUsers->contains($user)) {
-            $this->favoriUsers[] = $user;
-        }
-
-        return $this;
-    }
-
-    public function removeFavoriUser(User $user): self
-    {
-        if ($this->favoriUsers->contains($user)) {
-            $this->favoriUsers->removeElement($user);
-        }
-
-        return $this;
-    }
-
-    public function getFavoriUsers(): Collection
-    {
-        return $this->favoriUsers;
-    }
-
-    public function addUser(User $user): void
-    {
-        if (!$this->favoris->contains($user)) {
-            $this->favoris[] = $user;
-            $user->addFavori($this);
-        }
-    }
-
-    /**
-     * @return Collection<int, LivreLike>
-     */
-    public function getLikes(): Collection
-    {
-        return $this->likes;
-    }
-
-    public function addLike(LivreLike $like): self
-    {
-        if (!$this->likes->contains($like)) {
-            $this->likes->add($like);
-            $like->setLivre($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLike(LivreLike $like): self
-    {
-        if ($this->likes->removeElement($like)) {
-            // set the owning side to null (unless already changed)
-            if ($like->getLivre() === $this) {
-                $like->setLivre(null);
-            }
-        }
-
-        return $this;
-    }
-
-
 }

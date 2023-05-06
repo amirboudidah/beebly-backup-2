@@ -39,43 +39,6 @@ class LivreRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
-    public function findOneWithFavoris(int $id): ?Livre
-    {
-        return $this->createQueryBuilder('l')
-            ->addSelect('f')
-            ->leftJoin('l.favoris', 'f')
-            ->andWhere('l.id = :id')
-            ->setParameter('id', $id)
-            ->getQuery()
-            ->getOneOrNullResult()
-            ;
-    }
-//
-//    public function search(string $query)
-//    {
-//        $entityManager = $this->getEntityManager();
-//
-//        $queryBuilder = $entityManager->createQueryBuilder()
-//            ->select('livre')
-//            ->from(Livre::class, 'livre')
-//            ->where('livre.titre LIKE :query')
-//            ->orWhere('livre.auteur LIKE :query')
-//            ->setParameter('query', '%'.$query.'%');
-//
-//        return $queryBuilder->getQuery()->getResult();
-//    }
-
-    public function findByTitle($title)
-    {
-        return $this->createQueryBuilder('l')
-            ->andWhere('l.titre LIKE :title')
-            ->setParameter('title', '%'.$title.'%')
-            ->getQuery()
-            ->getResult();
-    }
-
-
     /**
      * @throws NonUniqueResultException
      */
@@ -101,8 +64,6 @@ class LivreRepository extends ServiceEntityRepository
 
 
     }
-
-
 
 //    /**
 //     * @return Livre[] Returns an array of Livre objects

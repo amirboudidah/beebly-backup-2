@@ -3,27 +3,18 @@
 namespace App\Controller;
 
 use App\Entity\Livre;
-use App\Entity\Item;
 use App\Repository\ItemRepository;
 use App\Repository\LivreRepository;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\ORM\EntityManagerInterface;
-use Dompdf\Dompdf;
-use Dompdf\Options;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Stripe\Checkout\Session;
-use Stripe\Stripe;
-
 
 class PanierController extends AbstractController
 {
-
     #[Route('/panier', name: 'app_panier')]
     public function index(SessionInterface $session, LivreRepository $livreRepository): Response
     {
@@ -50,7 +41,7 @@ class PanierController extends AbstractController
         ]);
     }
 
-     #[Route('/panier/add/{id}', name: 'panier_add')]
+    #[Route('/panier/add/{id}', name: 'panier_add')]
     public function add($id, SessionInterface $session){
 
         $panier =$session->get('panier',[]);
@@ -60,9 +51,9 @@ class PanierController extends AbstractController
             $panier[$id] = 1;;
         }
         $session->set('panier',$panier);
-       return $this->redirectToRoute("app_panier");
+        return $this->redirectToRoute("app_panier");
 
-     }
+    }
 
     #[Route('/panier/remove/{id}', name: 'panier_remove')]
     public function remove($id, SessionInterface $session){
@@ -73,22 +64,19 @@ class PanierController extends AbstractController
         }
         $session->set('panier',$panier);
         return $this->redirectToRoute("app_panier");
-     }
+    }
+
+    private function getTotal($panier)
+    {
+        // Calculer le total du panier
+        // ...
+    }
 
     /**
      * @Route("/panier/pdf", name="panier_pdf", methods={"GET", "POST"})
      */
     public function pdf(ItemRepository $itemRepository,SessionInterface $session, LivreRepository $livreRepository)
     {
-
-
-
-
-
-        //
-
-
-
         $panier = $session->get('panier', []);
         $panierWithData = [];
         foreach ($panier as $id => $quantity){
@@ -125,7 +113,7 @@ class PanierController extends AbstractController
         // Load HTML to Dompdf
         $dompdf->loadHtml($html);
         // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
-  //      $dompdf->setPaper('A3', 'portrait');
+        //      $dompdf->setPaper('A3', 'portrait');
         $dompdf->render();
 
         $pdf = $dompdf->output();
@@ -140,74 +128,4 @@ class PanierController extends AbstractController
             ]
         );
     }
-
-    /**
-     * @Route("/create-checkout-session", name="checkout")
-     */
-    public function checkout(Request $request)
-    {
-        \Stripe\Stripe::setApiKey('your stripe key');
-
-        $session = \Stripe\Checkout\Session::create([
-            'payment_method_types' => ['card'],
-            'line_items' => [[
-                'price_data' => [
-                    'currency' => 'eur',
-                    'product_data' => [
-                        'name' => 'Total Commande',
-                    ],
-                    'unit_amount' => $this->getTotal($request->getSession()->get('panier', []))*100,
-                ],
-                'quantity' => 1,
-            ]],
-            'mode' => 'payment',
-            'success_url' => $this->generateUrl('success', [], UrlGeneratorInterface::ABSOLUTE_URL),
-            'cancel_url' => $this->generateUrl('error', [], UrlGeneratorInterface::ABSOLUTE_URL),
-        ]);
-
-        return new JsonResponse([ 'id' => $session->id ]);
-    }
-    /**
-     * @Route("/success", name="success")
-     */
-    public function success( \Swift_Mailer $mailer)
-    {
-
-        $message = (new \Swift_Message('New'))
-
-            ->setFrom('zemni.norchene@gmail.com')
-
-            ->setTo('zemni.norchene@gmail.com')
-
-            ->setSubject('Votre commande a été enregistrée !')
-
-
-            ->setBody(
-                $this->renderView(
-                    'Emails/Commande.html.twig'),
-
-                'text/html'
-            );
-
-
-        $mailer->send($message);
-        $this->addFlash('message', 'le message a bien ete envoye');
-        return $this->render('article/Success.html.twig');
-    }
-    private function getTotal($panier)
-    {
-        // Calculer le total du panier
-        // ...
-    }
-    /**
-     * @Route("/error", name="error")
-     */
-    public function error()
-    {
-        return $this->render('article/Error.html.twig');
-    }
-
-
-
-
 }

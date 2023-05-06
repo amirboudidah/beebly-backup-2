@@ -17,16 +17,11 @@ class Item
      */
     private $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Livre::class, inversedBy="items")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $livre;
+    #[ORM\ManyToOne(inversedBy: 'items')]
+    private ?Livre $livre = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $quantity;
+    #[ORM\Column(nullable: true)]
+    private ?int $quantity = null;
 
     public function getId(): ?int
     {
@@ -50,7 +45,7 @@ class Item
         return $this->quantity;
     }
 
-    public function setQuantity(int $quantity): self
+    public function setQuantity(?int $quantity): self
     {
         $this->quantity = $quantity;
 
